@@ -12,5 +12,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'title'         =>  $faker->unique()->jobTitle,
         'description'   =>  $faker->paragraph(),
         'price'         =>  random_int(100, 1000),
+        'sale_price'    =>  random_int(0, 1000),
     ];
 });

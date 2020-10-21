@@ -27,14 +27,14 @@
                     <h4 class="text-white">Menu</h4>
                     <ul class="list-unstyled">
                         @auth                                
-                            <li><a href="#" class="text-white">Dashboard</a></li>
-                            <li><a href="#" class="text-white">Logout</a></li>
+                            <li><a href="{{route('profile')}}" class="text-white">Dashboard</a></li>
+                            <li><a href="{{route('logout')}}" class="text-white">Logout</a></li>
                         @endauth
                         @guest                                
-                            <li><a href="#" class="text-white">Register</a></li>
-                            <li><a href="#" class="text-white">Login</a></li>
+                            <li><a href="{{route('register')}}"  class="text-white">Register</a></li>
+                            <li><a href="{{route('login')}}" class="text-white">Login</a></li>
                         @endguest                                                     
-                        <li><a href="#" class="text-white">Cart</a></li>
+                        <li><a href="{{route('cart.show')}}" class="text-white">Cart</a></li>
                     </ul>
                 </div>
             </div>
