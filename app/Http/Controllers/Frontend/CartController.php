@@ -94,7 +94,7 @@ class CartController extends Controller
         $cart = session()->has('cart') ? session()->get('cart') : [];
         $total = array_sum(array_column($cart, 'total_price'));
 
-        $data = [
+        $order = Order::create([
             'user_id'                   =>  auth()->user()->id,
             'customer_name'             =>  request()->input('customer_name'),
             'customer_phone_number'     =>  request()->input('customer_phone_number'),
@@ -106,9 +106,7 @@ class CartController extends Controller
             'paid_amount'               =>  $total,
             'payment_details'           =>  'Cash on Delivery',
             'discount_amount'           =>  0,
-        ];
-
-        $order = Order::create($data);
+        ]);
 
         foreach ($cart as $product_id => $product) {
             $order->products()->create([
@@ -119,10 +117,15 @@ class CartController extends Controller
         }
 
         session()->flash('type', 'success');
-        session()->flash('message', 'Order Created');
+        session()->flash('message', 'Order Placed Successfully.');
 
         session()->forget(['cart', 'total']);
 
-        return redirect('/');
+        return redirect()->route('order.details', $order->id);
+    }
+
+    public function showOrder($id){
+        $data['order'] = Order::findOrFail($id);
+        return view('frontend.orders.details', $data);
     }
 }

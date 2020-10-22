@@ -6,7 +6,9 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Notifications\RegistrationEmailNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -121,5 +123,11 @@ class AuthController extends Controller
         session()->flash('message', 'You have logged out successfully.');
 
         return redirect()->route('login');
+    }
+
+    public function profile(){
+        $user = Auth::user();
+        $data['orders'] = Order::where('user_id', $user->id)->get();
+        return view('frontend.auth.profile', $data);
     }
 }
